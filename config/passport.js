@@ -1,6 +1,8 @@
 import passport from 'passport';
 import Strategy from 'passport-local';
 import User from '../models/user';
+import FacebookStrategy from 'passport-facebook';
+import secret from '../secret/secret';
 
 const LocalStrategy = Strategy.Strategy;
 
@@ -64,4 +66,30 @@ passport.use('local.login', new LocalStrategy({
         
         return done(null, user); 
     });
+}));
+
+passport.use(new FacebookStrategy(secret.facebook, (req, token, refreshToken, profile, done) => {
+    User.findOne({facebook:profile.id}, (err, user) => {
+        if(err){
+            return done(err);
+        }
+
+        if(user){
+            debugger;
+            done(null, user);
+        }else{
+            var newUser = new User();
+            newUser.facebook = profile.id;
+            newUser.fullname = profile.displayName;
+            newUser.email = profile._json.email;
+            newUser.tokens.push({token:token});
+
+            newUser.save(function(err) {
+                if(err){
+                    console.log(err);
+                }
+                done(null, newUser);
+            });
+        }
+    })
 }));

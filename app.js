@@ -13,7 +13,9 @@ import passport from 'passport';
 import flash from 'connect-flash';
 import routes from './routes/index';
 import userRoutes from './routes/user';
+import companyRoutes from './routes/company';
 import './config/passport';
+import './secret/secret';
 
 const MongoStore = mongoStore(session);
 const app = express();
@@ -25,6 +27,7 @@ mongoose.connect('mongodb://localhost:27017/ratingapp');
 app.engine('ejs', engine);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -41,10 +44,7 @@ app.use(session({
   saveUninitialized: false,
   store: new MongoStore({
     mongooseConnection: mongoose.connection
-  }),
-  cookie: {
-    maxAge: 180 * 60 * 1000
-  }
+  })
 }));
 
 app.use(flash());
@@ -52,6 +52,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/user', userRoutes);
+app.use('/company', companyRoutes);
 app.use('/', routes);
 
 // catch 404 and forward to error handler
