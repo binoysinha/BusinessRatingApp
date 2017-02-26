@@ -16,12 +16,13 @@ $(document).ready(function(){
             formData.append('upload', uploadInput[0].files[0]);
             
             $.ajax({
-                url: '/upload',
+                url: '/company/upload',
                 type: 'POST',
                 data: formData,
                 processData: false,
                 contentType: false,
                 success: function(data){
+                    debugger;
                     uploadInput.val('');
                 },
                 

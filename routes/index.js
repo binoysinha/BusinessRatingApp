@@ -4,9 +4,7 @@ import passport from 'passport';
 const router = express.Router();
 
 router.get('/', (req, res, next) => {
-    debugger;
     if (req.session.cookie.originalMaxAge !== null) {
-        debugger;
         res.redirect('/home');
     } else {
         res.render('index', {
