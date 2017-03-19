@@ -19,7 +19,7 @@ router.get('/', (req, res, next) => {
     }
 });
 
-router.get('/home', (req, res) => {
+router.get('/home', isLoggedIn, (req, res) => {
     res.render('home', {
         title: 'Home || RateMe',
         user: req.user
@@ -30,7 +30,7 @@ router.get('/auth/facebook', passport.authenticate('facebook', {
     scope: 'email'
 }));
 
-router.get('/company', (req, res) => {
+router.get('/company', isLoggedIn, (req, res) => {
     Company.find({}, (err, result) => {
         res.render('company/companies', {
             title: 'All Companies || RateMe',
@@ -40,7 +40,7 @@ router.get('/company', (req, res) => {
     });
 });
 
-router.get('/company-profile/:id', (req, res) => {
+router.get('/company-profile/:id',isLoggedIn, (req, res) => {
     Company.findOne({
         '_id': req.params.id
     }, (err, data) => {
@@ -55,7 +55,7 @@ router.get('/company-profile/:id', (req, res) => {
     });
 });
 
-router.get('/:name/employees', (req, res) => {
+router.get('/:name/employees', isLoggedIn,(req, res) => {
     Company.findOne({
         'name': req.params.name
     }, (err, data) => {
@@ -66,7 +66,7 @@ router.get('/:name/employees', (req, res) => {
         });
     });
 });
-router.get('/companies/leaderboard', (req, res) => {
+router.get('/companies/leaderboard', isLoggedIn, (req, res) => {
     Company.find({}, (err, result) => {
         res.render('company/leaderboard', {
             title: 'Companies Leadebaord || RateMe',
@@ -90,5 +90,12 @@ router.get('/logout', (req, res) => {
         res.redirect('/');
     });
 });
+
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/');
+}
 
 export default router;

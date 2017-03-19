@@ -10,7 +10,7 @@ import Message from '../models/message';
 
 const router = express.Router();
 
-router.get('/create', (req, res) => {
+router.get('/create', isLoggedIn, (req, res) => {
     var success = req.flash('success');
     res.render('company/company', {
         title: 'Company Registration',
@@ -71,7 +71,7 @@ router.post('/upload', (req, res) => {
 
 
     
-    router.get('/register-employee/:id', (req, res) => {
+    router.get('/register-employee/:id', isLoggedIn, (req, res) => {
         Company.findOne({'_id':req.params.id}, (err, data) => {
             res.render('company/register-employee', {title: 'Register Employee', user:req.user, data: data});
         });
@@ -122,7 +122,7 @@ router.post('/upload', (req, res) => {
     
 
     
-    router.get('/search', (req, res) => {
+    router.get('/search', isLoggedIn, (req, res) => {
         res.render('company/search', {title: 'Find a Company', user:req.user});
     });
     
@@ -138,7 +138,7 @@ router.post('/upload', (req, res) => {
             res.redirect('/company-profile/'+data[0]._id);
         });
     });
-    router.get('/message/:id', (req, res) => {
+    router.get('/message/:id', isLoggedIn, (req, res) => {
     async.parallel([
         function (callback) {
             User.findById({
@@ -193,5 +193,12 @@ router.post('/message/:id', (req, res) => {
     })
 
 });
+
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/');
+}
 
 export default router;
