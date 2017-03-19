@@ -137,7 +137,7 @@ input[type="submit"]{
     margin: 0;
     padding: 10px 0px 0px 10px;
     height: 120px;
-    width: 250px;
+    width: 215px;
     float: right;
 }
 
@@ -198,11 +198,16 @@ input[type="submit"]{
 }
 
 .colDiv .col-md-4{
-    border: 1px solid #e7e7e7;
-    margin: 0px 5px 20px 10px;
-    width: 270px;
-    height: 150px;
+    margin-bottom: 10px;
     color: #73879C;
+}
+.count{
+    height: 150px;
+    padding: 0px 5px 20px 5px;
+        margin: 0 -10px;
+
+    border: 1px solid #e7e7e7;
+
 }
 
 .colDiv .header{
@@ -212,6 +217,7 @@ input[type="submit"]{
     margin-bottom: 20px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .colDiv .header h2{
@@ -224,7 +230,6 @@ input[type="submit"]{
 .colDiv .header a{
     font-size: 15px;
     font-weight: normal;
-    margin: 0px 0px 0px 590px;
 }
 
 .reviewDiv{

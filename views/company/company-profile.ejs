@@ -22,7 +22,7 @@
 	            <div class="row mainDiv">
 					<div class="innerDiv">
 						<div class="col-md-3" style="margin-bottom:30px;">
-							<img src="/images/<%= data.image %>" width="270px" height="270px" alt="">
+							<img src="/uploads/<%= data.image %>" width="100%" height="270px" alt="">
 							<h3><%= data.name %></h3>
 							<i class="fa fa-map-marker "> <%= data.city %>, <%= data.country %></i><br>
 							<i class="fa fa-building-o "> <%= data.sector %></i><br>
@@ -95,7 +95,7 @@
 								    <% data.companyRating.forEach(function(val){ %>
 								        <div class="col-md-12 reviewDiv">
                                             <div class="col-md-2">
-                                                <img src="/images/<%= val.companyImage %>" width="100px" height="100px">
+                                                <img src="/uploads/<%= val.companyImage %>" width="100px" height="100px">
                                             </div>
 
                                             <div class="col-md-8">

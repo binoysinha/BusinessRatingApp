@@ -5,7 +5,7 @@ $(document).ready(function(){
         var message = $.trim($('#msg').val());
         
         if(message != ''){
-            $.post('/message/'+id, {
+            $.post('/company/message/'+id, {
                 message: message,
                 id: id
             }, function(data){

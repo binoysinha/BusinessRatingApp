@@ -11,9 +11,13 @@ import mongoose from 'mongoose';
 import mongoStore from 'connect-mongo';
 import passport from 'passport';
 import flash from 'connect-flash';
+import moment from 'moment';
 import routes from './routes/index';
 import userRoutes from './routes/user';
 import companyRoutes from './routes/company';
+import reviewRoutes from './routes/review';
+import messageRoutes from './routes/message';
+
 import './config/passport';
 import './secret/secret';
 
@@ -24,12 +28,12 @@ const port = 3000;
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/ratingapp');
 
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.engine('ejs', engine);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(cookieParser());
-
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -51,9 +55,13 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
+//app.use('/message', messageRoutes);
 app.use('/user', userRoutes);
 app.use('/company', companyRoutes);
+app.use('/review', reviewRoutes);
 app.use('/', routes);
+
+app.locals.moment = moment;
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
